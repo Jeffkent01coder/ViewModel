@@ -18,15 +18,29 @@ class MainActivity : AppCompatActivity() {
 
         myViewModel = ViewModelProvider(this)[MyViewModel::class.java]
 
-        binding.textViewCounter.text = myViewModel.getInitialCounter().toString()
+        myViewModel.counterLiveData.observe(this) { count ->
+            binding.textViewCounter.text = "$count"
+
+        }
 
         binding.buttonCount.setOnClickListener {
-            binding.textViewCounter.text = myViewModel.getUpdatedCounter().toString()
+            myViewModel.incrementCounter()
+
         }
 
         binding.buttonCountMinus.setOnClickListener {
-            binding.textViewCounter.text = myViewModel.getSubtractCounter().toString()
+            myViewModel.decrementCounter()
         }
+
+//        binding.textViewCounter.text = myViewModel.getInitialCounter().toString()
+//
+//        binding.buttonCount.setOnClickListener {
+//            binding.textViewCounter.text = myViewModel.getUpdatedCounter().toString()
+//        }
+//
+//        binding.buttonCountMinus.setOnClickListener {
+//            binding.textViewCounter.text = myViewModel.getSubtractCounter().toString()
+//        }
 
     }
 }
